@@ -11,7 +11,8 @@
 #SBATCH --output=bioemu_outputs/%x_%j.out
 #SBATCH --error=bioemu_outputs/%x_%j.err
 
-module load Miniforge3
+module load Miniconda3
+conda init bash
 conda activate /net/tscratch/people/plgestacherczak/conda_envs/bioemu
 
 export HF_HOME=$SCRATCH/hf_cache
