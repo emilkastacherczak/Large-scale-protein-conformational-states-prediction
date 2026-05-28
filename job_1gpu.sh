@@ -8,8 +8,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --time=12:00:00
 #SBATCH --account=plglscclass26-gpu-a100
-#SBATCH --output=%x_%j.out
-#SBATCH --error=%x_%j.err
+#SBATCH --output=bioemu_outputs/%x_%j.out
+#SBATCH --error=bioemu_outputs/%x_%j.err
 
 module load Miniforge3
 conda activate /net/tscratch/people/plgestacherczak/conda_envs/bioemu
