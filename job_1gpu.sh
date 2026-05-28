@@ -17,5 +17,6 @@ conda activate /net/tscratch/people/plgestacherczak/conda_envs/bioemu
 export HF_HOME=$SCRATCH/hf_cache
 export CUDA_VISIBLE_DEVICES=0
 
+cd "$SLURM_SUBMIT_DIR"
 echo "=== JOB: $SLURM_JOB_ID | NODE: $SLURMD_NODENAME | GPUs: 1 ==="
-python ~/bioemu_benchmark.py
+python "$SLURM_SUBMIT_DIR/bioemu_benchmark.py"

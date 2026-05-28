@@ -12,12 +12,13 @@
 #SBATCH --error=%x_%j.err
 
 module load Miniforge3
-conda activate bioemu
+conda activate /net/tscratch/people/plgestacherczak/conda_envs/bioemu
 
 export HF_HOME=$SCRATCH/hf_cache
 
-# Każdy task dostaje swoje GPU
+cd "$SLURM_SUBMIT_DIR"
+
 srun --ntasks=8 bash -c '
   export CUDA_VISIBLE_DEVICES=$SLURM_LOCALID
-  python ~/bioemu_benchmark.py
+  python "$SLURM_SUBMIT_DIR/bioemu_benchmark.py"
 '
