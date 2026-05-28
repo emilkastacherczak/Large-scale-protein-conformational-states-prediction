@@ -8,11 +8,11 @@
 #SBATCH --gres=gpu:8
 #SBATCH --time=08:00:00
 #SBATCH --account=plglscclass26-gpu-a100
-#SBATCH --output=bioemu_outputs/%x_%j.out
-#SBATCH --error=bioemu_outputs/%x_%j.err
+#SBATCH --output=slurm_logs/%x_%j.out
+#SBATCH --error=slurm_logs/%x_%j.err
 
 module load Miniconda3
-conda init bash
+eval "$(conda shell.bash hook)"
 conda activate /net/tscratch/people/plgestacherczak/conda_envs/bioemu
 
 export HF_HOME=$SCRATCH/hf_cache
