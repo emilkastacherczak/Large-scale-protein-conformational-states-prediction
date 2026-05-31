@@ -17,14 +17,18 @@ FASTA_DIRS = {
     "501-1000aa": os.path.join(BASE_DIR, "100x501aa-1000aa"),
 }
 
-RANK   = int(os.environ.get("SLURM_PROCID", "0"))
-NRANKS = int(os.environ.get("SLURM_NTASKS", "1"))
+RANK     = int(os.environ.get("SLURM_PROCID", "0"))
+NRANKS   = int(os.environ.get("SLURM_NTASKS", "1"))
+JOB_NAME = os.environ.get("SLURM_JOB_NAME", "local")
 
+# CSV / log paths carry the SLURM job name so different sbatch scripts
+# (job_1gpu / job_8gpu / job_multinode) don't overwrite or append to
+# each other's files. Rank is appended only when there's more than one.
 _RANK_SUFFIX = f".rank{RANK}" if NRANKS > 1 else ""
-OUTPUT_CSV = os.path.join(BASE_DIR, f"bioemu_results{_RANK_SUFFIX}.csv")
+OUTPUT_CSV = os.path.join(BASE_DIR, f"bioemu_results.{JOB_NAME}{_RANK_SUFFIX}.csv")
 OUTPUT_DIR = os.path.join(BASE_DIR, "bioemu_outputs")
-LOG_DIR    = (os.path.join(BASE_DIR, "bioemu_logs", f"rank{RANK}")
-              if NRANKS > 1 else os.path.join(BASE_DIR, "bioemu_logs"))
+LOG_DIR    = (os.path.join(BASE_DIR, "bioemu_logs", JOB_NAME, f"rank{RANK}")
+              if NRANKS > 1 else os.path.join(BASE_DIR, "bioemu_logs", JOB_NAME))
 
 _SCRATCH    = os.environ.get("SCRATCH", BASE_DIR)
 CACHE_BASE  = os.path.join(_SCRATCH, "bioemu_caches")
