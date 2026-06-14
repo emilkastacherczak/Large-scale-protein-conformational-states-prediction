@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name=bioemu_numsamples_8gpu
+#SBATCH --partition=plgrid-gpu-a100
+#SBATCH --nodes=1
+#SBATCH --ntasks=8
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=256G
+#SBATCH --gres=gpu:8
+#SBATCH --time=03:00:00
+#SBATCH --account=plglscclass26-gpu-a100
+#SBATCH --output=slurm_logs/%x_%j.out
+#SBATCH --error=slurm_logs/%x_%j.err
+
+module load Miniconda3
+eval "$(conda shell.bash hook)"
+conda activate /net/tscratch/people/plgestacherczak/conda_envs/bioemu
+
+export HF_HOME=$SCRATCH/hf_cache
+
+cd "$SLURM_SUBMIT_DIR"
+
+srun --ntasks=8 bash -c '
+  export CUDA_VISIBLE_DEVICES=$SLURM_LOCALID
+  python "$SLURM_SUBMIT_DIR/bioemu_benchmark_numsamples.py"
+'
