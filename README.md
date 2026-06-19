@@ -11,5 +11,5 @@ multinode). Experiments were executed on the Athena supercomputer.
 	output, SLURM-aware partitioning).
 - `job_1gpu.sh`, `job_8gpu.sh`, `job_multinode.sh` - job scripts.
 - `100x50aa-100aa/`, `100x101aa-500aa/`, `100x501aa-1000aa/` - FASTA datasets used for the runs.
-- `analyze.ipynb` - notebook for aggregating results and plotting figures.
+- `analyze.ipynb`, `analyze_numsamples.ipynb` - notebook for aggregating results and plotting figures.
 
